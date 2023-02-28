@@ -1,0 +1,249 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "end_time",
+						"type": "uint256"
+					}
+				],
+				"name": "Vote_end",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "start_time",
+						"type": "uint256"
+					}
+				],
+				"name": "Vote_start",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "voter",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "Voter_set",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "voter",
+						"type": "address"
+					}
+				],
+				"name": "Voting_complete",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "voter",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "proposal_id",
+						"type": "uint256"
+					}
+				],
+				"name": "get_ballot",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "proposal_id",
+						"type": "uint256"
+					}
+				],
+				"name": "new_proposal",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "candidates",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "proposal_id",
+						"type": "uint256"
+					}
+				],
+				"name": "set_candidates",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "duration",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "proposal_id",
+						"type": "uint256"
+					}
+				],
+				"name": "set_duration",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "voters",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "proposal_id",
+						"type": "uint256"
+					}
+				],
+				"name": "set_voters",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "ballot",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "proposal_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "voter_id",
+						"type": "uint256"
+					}
+				],
+				"name": "voting",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "proposal_id",
+						"type": "uint256"
+					}
+				],
+				"name": "voting_end",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "proposal_id",
+						"type": "uint256"
+					}
+				],
+				"name": "voting_start",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Vote_1.sol": "Vote"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Vote_1.sol": {
+			"keccak256": "0x5d6f0961af60cdf1e9b5d7d9383707b297838f267465e5ea872f0c4abfe41009",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://82a8a26adfb79971a653779e321606424d11737c675ac13d08b06849197d3392",
+				"dweb:/ipfs/QmaVB9QqAQxsyAroMjKVBgPSEG3mWhB2DKzG2hiS3ykvcH"
+			]
+		}
+	},
+	"version": 1
+}
