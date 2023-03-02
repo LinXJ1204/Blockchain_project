@@ -18,6 +18,12 @@
 						"internalType": "uint256",
 						"name": "end_time",
 						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "block_number",
+						"type": "uint256"
 					}
 				],
 				"name": "Vote_end",
@@ -30,6 +36,12 @@
 						"indexed": false,
 						"internalType": "uint256",
 						"name": "start_time",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "block_number",
 						"type": "uint256"
 					}
 				],
@@ -237,11 +249,11 @@
 	},
 	"sources": {
 		"Vote_1.sol": {
-			"keccak256": "0x5d6f0961af60cdf1e9b5d7d9383707b297838f267465e5ea872f0c4abfe41009",
+			"keccak256": "0x3e441d59a767dc89628a39389ee8550c3482559d8d011efc82c2399c5da1d685",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://82a8a26adfb79971a653779e321606424d11737c675ac13d08b06849197d3392",
-				"dweb:/ipfs/QmaVB9QqAQxsyAroMjKVBgPSEG3mWhB2DKzG2hiS3ykvcH"
+				"bzz-raw://665e56e14005a6a7c34cddcab15036e142f5a08a54c9ae91c7ac71f14e436b05",
+				"dweb:/ipfs/QmSSqfoQnrEvrN3SkaMqGALaG6zHtY7YeZWYrgbBL6k1jF"
 			]
 		}
 	},

@@ -13,8 +13,8 @@ contract Vote{
 
     event Voter_set(address voter, uint id);
     event Voting_complete(address voter);
-    event Vote_start(uint start_time);
-    event Vote_end(uint end_time);
+    event Vote_start(uint start_time, uint block_number);
+    event Vote_end(uint end_time, uint block_number);
 
     struct _Proposal{
         uint _proposal_id;
@@ -67,7 +67,7 @@ contract Vote{
         require(msg.sender==_constractowner, "No Permission");
         _proposal[proposal_id]._voting_status ++;
         _proposal[proposal_id]._timestamp = block.timestamp;
-        emit Vote_start(_proposal[proposal_id]._timestamp);
+        emit Vote_start(_proposal[proposal_id]._timestamp, block.number);
     }
 
     function voting_end(uint proposal_id) public {
@@ -75,21 +75,24 @@ contract Vote{
         require(msg.sender==_constractowner, "No Permission");
         require(_proposal[proposal_id]._timestamp-block.timestamp>_proposal[proposal_id]._duration);
         _proposal[proposal_id]._voting_status++;
-        emit Vote_end(_proposal[proposal_id]._timestamp);
+        emit Vote_end(_proposal[proposal_id]._timestamp, block.number);
     }
 
     function get_ballot(address voter, uint proposal_id) public view returns(bytes32){
+        require(_proposal[proposal_id]._voting_status>1);
         require(msg.sender==_constractowner, "No Permission");
         return _proposal[proposal_id].voter_ballot[voter];
     }
 
     function set_candidates(address [] memory candidates, uint proposal_id) public {
+        require(_proposal[proposal_id]._voting_status<1);
         _proposal[proposal_id]._candidate = candidates;
     }
 
 
 
     function set_voters(address [] memory voters, uint proposal_id) public {
+        require(_proposal[proposal_id]._voting_status<1);
         require(msg.sender==_constractowner, "No Permission");
         for(uint i = 0; i < voters.length; i++){
             set_voter_list(voters[i], proposal_id);
