@@ -8,7 +8,6 @@ contract Vote{
 
     constructor(){
         _constractowner = msg.sender;
-
     }
 
     event Voter_set(address voter, uint id);
