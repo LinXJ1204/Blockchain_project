@@ -10,10 +10,10 @@ contract Vote{
         _constractowner = msg.sender;
     }
 
-    event Voter_set(address voter, uint id);
-    event Voting_complete(address voter);
-    event Vote_start(uint start_time, uint block_number);
-    event Vote_end(uint end_time, uint block_number);
+    event Voter_set(address voter, uint user_id, uint proposal_id);
+    event Voting_complete(address voter, string ballot, uint proposal_id);
+    event Vote_start(uint start_time, uint block_number, uint proposal_id);
+    event Vote_end(uint end_time, uint block_number, uint proposal_id);
 
     struct _Proposal{
         uint _proposal_id;
@@ -25,7 +25,7 @@ contract Vote{
         uint _voter_amount;
         address [] _candidate;
         mapping(uint=>address) voter_list;
-        mapping(address=>bytes32) voter_ballot;
+        mapping(address=>string) voter_ballot;
         mapping(address => bool) hasVoted;
     }
 
@@ -50,15 +50,15 @@ contract Vote{
         uint count = _proposal[proposal_id]._count;
         _proposal[proposal_id].voter_list[count] = voter;
         _proposal[proposal_id]._count++;
-        emit Voter_set(voter, count);
+        emit Voter_set(voter, count, proposal_id);
     }
 
-    function voting(bytes32 ballot, uint proposal_id, uint voter_id) public{
+    function voting(string memory ballot, uint proposal_id, uint voter_id) public{
         require(_proposal[proposal_id]._voting_status==1);
         require(msg.sender==_proposal[proposal_id].voter_list[voter_id], "Wrong key");
         _proposal[proposal_id].voter_ballot[msg.sender] = ballot;
         _proposal[proposal_id]._voted++;
-        emit Voting_complete(msg.sender);
+        emit Voting_complete(msg.sender, ballot, proposal_id);
     }
 
     function voting_start(uint proposal_id) public {
@@ -66,18 +66,18 @@ contract Vote{
         require(msg.sender==_constractowner, "No Permission");
         _proposal[proposal_id]._voting_status ++;
         _proposal[proposal_id]._timestamp = block.timestamp;
-        emit Vote_start(_proposal[proposal_id]._timestamp, block.number);
+        emit Vote_start(_proposal[proposal_id]._timestamp, block.number, proposal_id);
     }
 
     function voting_end(uint proposal_id) public {
         require(_proposal[proposal_id]._voting_status==1);
         require(msg.sender==_constractowner, "No Permission");
-        require(_proposal[proposal_id]._timestamp-block.timestamp>_proposal[proposal_id]._duration);
+        require(block.timestamp-_proposal[proposal_id]._timestamp>_proposal[proposal_id]._duration);
         _proposal[proposal_id]._voting_status++;
-        emit Vote_end(_proposal[proposal_id]._timestamp, block.number);
+        emit Vote_end(_proposal[proposal_id]._timestamp, block.number, proposal_id);
     }
 
-    function get_ballot(address voter, uint proposal_id) public view returns(bytes32){
+    function get_ballot(address voter, uint proposal_id) public view returns(string memory){
         require(_proposal[proposal_id]._voting_status>1);
         require(msg.sender==_constractowner, "No Permission");
         return _proposal[proposal_id].voter_ballot[voter];
