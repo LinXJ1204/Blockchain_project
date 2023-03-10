@@ -1,0 +1,137 @@
+<html>
+    <form>
+         <h2>My Account</h2>
+        <div style="background-color: lightblue;">
+            <p>account:</p>
+            <p id="account">0x</p>
+        </div>
+    </form>
+    <form action="/" method="POST">
+        <h2>User</h2>
+        <div>
+            User name: <input type="text" id="user_name" style="background-color: #FFFFB9; width: 400;"><br>
+            User address: <input type="text" id="user_address" style="background-color: #FFFFB9; width: 400;"><br>
+            User keyword: <input type="text" id="user_keyword" style="background-color: #FFFFB9; width: 400;"><br>
+        </div>
+        <div>
+            <input type="button" value="Create user" onclick="create_user()">
+        </div>
+        <div id="user_result"></div>
+        <h2>Vote</h2>
+        <div>
+            Proposal title: <input type="text" id="proposal_title" style="background-color: #FFFFB9; width: 400;"><br>
+            Proposal duration: <input type="text" id="proposal_duration" style="background-color: #FFFFB9; width: 400;"><br>
+            Proposal type: <input type="text" id="proposal_type" style="background-color: #FFFFB9; width: 400;"><br>
+            Proposal id: <input type="text" id="proposal_id_create" style="background-color: #FFFFB9; width: 400;"><br>
+        </div>
+        <div>
+            <input type="button" value="Create proposal" onclick="crate_proposal()">
+            <input type="button" value="Proposal start" onclick="proposal_start()">
+            <input type="button" value="Proposal end" onclick="proposal_end()">
+            <input type="button" value="Proposal result" onclick="proposal_result()">
+        </div>
+        <div id="proposal_result"></div>
+        <hr>
+        <div>
+            Participation list: <input type="text" id="participation_list" style="background-color: #FFFFB9; width: 400;"><br>
+        </div>
+        <div>
+            <input type="button" value="Participation add" onclick="participation_add()">
+            <input type="button" value="Add all" onclick="add_all()">
+        </div>
+        <hr>
+        <div>
+            Candidates list: <input type="text" id="Candidate_list" style="background-color: #FFFFB9; width: 400;"><br>
+        </div>
+        <div>
+            <input type="button" value="Candidate add" onclick="candidate_add()">
+        </div>
+        <hr>
+        <div>
+            Proposal id: <input type="text" id="proposal_id_cast" style="background-color: #FFFFB9; width: 400;"><br>
+            Cast Ballot: <input type="text" id="cast_ballot" style="background-color: #FFFFB9; width: 400;"><br>
+            Ballot key: <input type="text" id="ballot_key" style="background-color: #FFFFB9; width: 400;"><br>
+        </div>
+        <div>
+            <input type="button" value="Cast Ballot" onclick="cast_ballot()">
+        </div>
+        <hr>
+        <div>
+            Proposal_id: <input type="text" id="proposal_id_key" style="background-color: #FFFFB9; width: 400;"><br>
+            Ballot key: <input type="text" id="ballot_key" style="background-color: #FFFFB9; width: 400;"><br>
+        </div>
+        <div>
+            <input type="button" value="Submit" onclick="sumbit()">
+        </div>
+    </form>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+    <script type="module">
+        import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.1.0/ethers.min.js";
+        let abi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"end_time","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"block_number","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Vote_end","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"start_time","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"block_number","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Vote_start","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"voter","type":"address"},{"indexed":false,"internalType":"uint256","name":"user_id","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Voter_set","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"voter","type":"address"},{"indexed":false,"internalType":"bytes32","name":"ballot","type":"bytes32"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Voting_complete","type":"event"},{"inputs":[{"internalType":"address","name":"voter","type":"address"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"get_ballot","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"new_proposal","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"candidates","type":"address[]"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"set_candidates","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"set_duration","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"voters","type":"address[]"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"set_voters","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"ballot","type":"bytes32"},{"internalType":"uint256","name":"proposal_id","type":"uint256"},{"internalType":"uint256","name":"voter_id","type":"uint256"}],"name":"voting","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"voting_end","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"voting_start","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+        let smartcontract_address = '0xD7660E83af0B1De6CF44dF494B3355019Ff86f71';
+        let signer = null;
+        let provider;
+        let account;
+
+        async function initial(){
+                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                account = accounts[0];
+                var el = document.getElementById("account");
+                el.innerHTML = account;
+                if (window.ethereum == null) {
+                    console.log("MetaMask not installed; using read-only defaults")
+                    provider = ethers.getDefaultProvider()
+                } else {
+                    provider = new ethers.BrowserProvider(window.ethereum)
+                    signer = await provider.getSigner();
+                }}
+        initial();
+
+        window.crate_proposal = async function crate_proposal(){
+            var proposal_result = document.getElementById("proposal_result");
+            var title = document.getElementById("proposal_title").value;
+            var type = document.getElementById("proposal_type").value;
+            var duration = document.getElementById("proposal_duration").value;
+            var proposal_id;
+            $.ajax({
+            url: "/vote/set_proposal",
+            type: "POST",
+            dataType: "json",
+            data: ({title:title,type:type}),
+            success: function (data) {
+                proposal_id = data.data;
+                proposal_result.innerHTML = 'Proposal id: ' + data.data;
+                console.log(data.data);
+                const contract = new ethers.Contract(smartcontract_address, abi, signer);
+                contract.new_proposal(data.data);
+            }
+            });
+        }
+
+    
+
+    </script>
+    <script>
+        function create_user(){
+            var user_result = document.getElementById("user_result");
+            var name = document.getElementById("user_name").value;
+            var address = document.getElementById("user_address").value;
+            var password = document.getElementById("user_keyword").value;
+            $.ajax({
+            url: "/user",
+            type: "POST",
+            dataType: "json",
+            data: ({name:name,address:address,password:password}),
+            success: function (data) {
+                user_result.innerHTML = 'Your user id: ' + data.data;
+                console.log(data.data);
+            }
+            });
+        }
+
+        
+
+
+    </script>
+    
+</html>
