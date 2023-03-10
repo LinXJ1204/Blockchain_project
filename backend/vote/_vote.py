@@ -1,5 +1,7 @@
 from db_operate._db_operate import set_proposal,set_participation, cipher_collect,key_set
 
+#build a structure to be cache of voting result
+
 #建立投票事件to database（回傳ＩＤ
 def set_proposal(title, type):
     id = set_proposal(title, type)
@@ -25,6 +27,7 @@ def set_candidate(proposal_id, list):
 #區塊鏈登陸候選人（事件ＩＤ（傳給前端介面
 
 
+
 #接收私鑰
 def get_key(proposal_id, user_id, key):
     key_set(proposal_id, user_id, key)
@@ -34,12 +37,13 @@ def cipher_collect(proposal_id):
     cipher = cipher_collect(proposal_id)
     return cipher
 
-#收集私鑰
-def key_collect(proposal_id, user_id):
-    return 0
+#接收解密和私鑰（回傳加密確認
+def decode(proposal_id):
+    #Need to satisfy some constraints, add mechanism later
+    result = []
 
 
-#解密
+
 
 
 

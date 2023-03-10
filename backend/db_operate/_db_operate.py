@@ -1,12 +1,11 @@
-from main import db
-from db_operate.model.model import User, participation_list, paper_list, vote_key, Activity,author
+from backend.extension import db
+from backend.db_operate.model.model import User, participation_list, paper_list, vote_key, Activity,author
 import random
 
-def create_new_user(address,email,name,password):
-    id = random.randint()
+def create_new_user(address,name,password):
+    id = random.randint(0,100)
     new_user = User()
     new_user.user_id = id
-    new_user.email = email
     new_user.name = name
     new_user.password = password
     new_user.address = address
@@ -16,7 +15,7 @@ def create_new_user(address,email,name,password):
     return id
 
 def set_proposal(title, type):
-    id = random.randint()
+    id = random.randint(0,100)
     new_proposal = Activity()
     new_proposal.activity_id = id
     new_proposal.category = type
@@ -52,7 +51,8 @@ def cipher_set(proposal_id, address, cipher):
     db.session.add(participation)
     db.session.commit()
 
-def key_set(proposal_id, user_id, skey):
+def key_set(proposal_id, user_address, skey):
+    user_id = User.query.filter_by(address=user_address).first().user_id
     participation = participation_list.query.filter(participation_list.user_id == user_id,participation_list.activity_id == proposal_id).first()
     participation.key_offering = "True"
     db.session.add(participation)
@@ -70,9 +70,4 @@ def cipher_collect(proposal_id):
         cipher.append({'user_id':item.address, 'cipher':item.ballot})
     return cipher
 
-def skey_collect(proposal_id):
-    skey = []
-    key_list = vote_key.query.filter(vote_key.activity_id == proposal_id).All()
-    for item in key_list:
-        skey.append({'user_id':item.address, 'skey':item.key})
-    return skey
+

@@ -1,10 +1,9 @@
-from main import db
-
+from backend.extension import db
 class User(db.Model):
     __tablename__ = 'user'
     user_id = db.Column(db.Integer, primary_key=True)
     address = db.Column(db.String(50), unique=True, nullable=False)
-    email = db.Column(db.String(40), unique=True, nullable=False)
+    email = db.Column(db.String(40), unique=True, nullable=True)
     name = db.Column(db.String(20), nullable=False)
     password = db.Column(db.String(40), nullable=False)
     balance = db.Column(db.Integer, nullable=False)
@@ -48,3 +47,4 @@ class author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     paper_id = db.Column(db.Integer, db.ForeignKey(paper_list.paper_id))
     author_id = db.Column(db.Integer, db.ForeignKey(User.user_id))
+
