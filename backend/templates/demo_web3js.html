@@ -4,6 +4,8 @@
         <div style="background-color: lightblue;">
             <p>account:</p>
             <p id="account">0x</p>
+            <p>UserID:</p>
+            <p id="user_id"></p>
         </div>
     </form>
     <form action="/" method="POST">
@@ -33,6 +35,7 @@
         <div id="proposal_result"></div>
         <hr>
         <div>
+            Proposal id: <input type="text" id="proposal_id_participation" style="background-color: #FFFFB9; width: 400;"><br>
             Participation list: <input type="text" id="participation_list" style="background-color: #FFFFB9; width: 400;"><br>
         </div>
         <div>
@@ -65,6 +68,7 @@
         </div>
     </form>
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script type="module">
         import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.1.0/ethers.min.js";
         let abi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"end_time","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"block_number","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Vote_end","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"start_time","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"block_number","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Vote_start","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"voter","type":"address"},{"indexed":false,"internalType":"uint256","name":"user_id","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Voter_set","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"voter","type":"address"},{"indexed":false,"internalType":"bytes32","name":"ballot","type":"bytes32"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Voting_complete","type":"event"},{"inputs":[{"internalType":"address","name":"voter","type":"address"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"get_ballot","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"new_proposal","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"candidates","type":"address[]"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"set_candidates","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"set_duration","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"voters","type":"address[]"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"set_voters","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"ballot","type":"bytes32"},{"internalType":"uint256","name":"proposal_id","type":"uint256"},{"internalType":"uint256","name":"voter_id","type":"uint256"}],"name":"voting","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"voting_end","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"voting_start","outputs":[],"stateMutability":"nonpayable","type":"function"}];
@@ -74,10 +78,24 @@
         let account;
 
         async function initial(){
-                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-                account = accounts[0];
                 var el = document.getElementById("account");
-                el.innerHTML = account;
+                var user_id = document.getElementById("user_id");
+                const promise_account = new Promise((resolve)=>{
+                    resolve(ethereum.request({ method: 'eth_requestAccounts' }));
+                }).then((account)=>{
+                    el.innerHTML = account[0];
+                    return account[0];
+                }).then((account)=>{
+                    $.ajax({
+                    url: "/user/get_user_id",
+                    type: "POST",
+                    dataType: "json",
+                    data: ({address: account}),
+                    success: function (data) {
+                        user_id.innerHTML = data.data;
+                }
+                });
+                })
                 if (window.ethereum == null) {
                     console.log("MetaMask not installed; using read-only defaults")
                     provider = ethers.getDefaultProvider()
@@ -85,6 +103,7 @@
                     provider = new ethers.BrowserProvider(window.ethereum)
                     signer = await provider.getSigner();
                 }}
+
         initial();
 
         window.crate_proposal = async function crate_proposal(){
@@ -97,7 +116,7 @@
             url: "/vote/set_proposal",
             type: "POST",
             dataType: "json",
-            data: ({title:title,type:type}),
+            data: ({title:title,type:type,duration:duration}),
             success: function (data) {
                 proposal_id = data.data;
                 proposal_result.innerHTML = 'Proposal id: ' + data.data;
@@ -108,7 +127,80 @@
             });
         }
 
-    
+        window.proposal_start = async function proposal_start(){
+            var proposal_id = document.getElementById("proposal_id_create").value;
+            const contract = new ethers.Contract(smartcontract_address, abi, signer);
+            contract.voting_start(proposal_id);
+        };
+
+        window.proposal_end = async function proposal_end(){
+            var proposal_id = document.getElementById("proposal_id_create").value;
+            const contract = new ethers.Contract(smartcontract_address, abi, signer);
+            contract.voting_end(proposal_id);
+        }
+
+
+        window.participation_add = async function participation_add(){
+            var particitpation_list = document.getElementById("participation_list").value;
+            var proposal_id = document.getElementById('proposal_id_participation').value;
+            $.ajax({
+            url: "/vote/set_participate",
+            type: "POST",
+            dataType: "json",
+            data: ({participation:[particitpation_list], id:proposal_id, permission:'voter'}),
+            success: function (data) {
+                const contract = new ethers.Contract(smartcontract_address, abi, signer);
+                contract.set_voters([particitpation_list], proposal_id);
+            }
+            });
+        }
+
+        window.add_all = async function add_all(){
+            var proposal_id = document.getElementById('proposal_id_participation').value;
+            $.ajax({
+            url: "/vote/set_participate",
+            type: "POST",
+            dataType: "json",
+            data: ({participation:[], id:proposal_id, permission:'voter'}),
+            success: function (data) {
+                list = data.data
+                const contract = new ethers.Contract(smartcontract_address, abi, signer);
+                contract.set_voters(list, proposal_id);
+            }
+            });
+        }
+
+        window.candidate_add = async function candidate_add(){
+            var candidate_list = document.getElementById("participation_list").value;
+            var proposal_id = document.getElementById('proposal_id_participation').value;
+            $.ajax({
+            url: "/vote/set_participate",
+            type: "POST",
+            dataType: "json",
+            data: ({participation:[candidate_list], id:proposal_id, permission:'candidate'}),
+            success: function (data) {
+                const contract = new ethers.Contract(smartcontract_address, abi, signer);
+                contract.set_candidates([candidate_list], proposal_id);
+            }
+            });
+        }
+
+        window.cast_ballot = async function cast_ballot(){
+            //add crypto.js
+            var proposal_id = document.getElementById('proposal_id_cast').value;
+            var cast_ballot = document.getElementById('cast_ballot').value;
+            var ballot_key = document.getElementById('ballot_key').value;
+            var user_id = document.getElementById("user_id").value;
+            var encrypted_ballot = CryptoJS.AES.encrypt(cast_ballot, ballot_key);
+
+            const contract = new ethers.Contract(smartcontract_address, abi, signer);
+            contract.voting(encrypted_ballot, proposal_id, user_id);
+        }
+
+        window.sumbit = async function sumbit(){
+            
+        }
+
 
     </script>
     <script>
@@ -128,10 +220,11 @@
             }
             });
         }
-
+        var key = 'wayne';
+        var encrypted = CryptoJS.AES.encrypt("Message", key);
+        var decrypted = CryptoJS.AES.decrypt(encrypted, key);
         
-
-
+        
     </script>
     
 </html>

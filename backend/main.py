@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from backend.extension import db
-from db_operate._db_operate import create_new_user, set_proposal, set_participation, key_set, cipher_set, cipher_collect
+from db_operate._db_operate import create_new_user, set_proposal, set_participation, key_set, cipher_set, cipher_collect, get_user_id
 
 
 
@@ -17,7 +17,6 @@ db.init_app(app)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-
     return render_template('demo_web3js.html')
 
 @app.route('/user', methods=['GET', 'POST'])
@@ -26,6 +25,13 @@ def user():
     print(request.form)
     requests = request.form.to_dict()
     id = create_new_user(requests['address'],requests['name'],requests['password'])
+    return {'data':id}
+
+@app.route('/user/get_user_id', methods=['GET', 'POST'])
+def get_id():
+    requests = request.form.to_dict()
+    print(request.form)
+    id = get_user_id(requests['address'])
     return {'data':id}
 
 @app.route('/vote/set_proposal', methods=['GET','POST'])
@@ -39,13 +45,8 @@ def vote_set():
 def vote_add():
     print(request.form)
     requests = request.form.to_dict()
-    set_participation(requests['particition'],requests['id'],requests['voter'])
-
-@app.route('/vote/set_cipher', methods=['GET','POST'])
-def vote_add_cipher():
-    print(request.form)
-    requests = request.form.to_dict()
-    cipher_set(requests['id'],requests['address'],requests['cipher'])
+    list = set_participation(requests['participation'],requests['id'],requests['permission'])
+    return {'data': list}
 
 @app.route('/vote/set_key', methods=['GET','POST'])
 def vote_submit_key():

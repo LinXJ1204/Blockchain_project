@@ -14,6 +14,9 @@ def create_new_user(address,name,password):
     db.session.commit()
     return id
 
+def get_user_id(address):
+    user_id = User.query.filter_by(address=address).first().user_id
+    return user_id
 def set_proposal(title, type):
     id = random.randint(0,100)
     new_proposal = Activity()
@@ -36,13 +39,15 @@ def set_participation(list, proposal_id, permission):
             db.session.add(participation)
     else:
         for i in range(0, len(list)):
+            user_id = User.query.filter_by(address=list[i]).first().user_id
             participation = participation_list()
             participation.activity_id = proposal_id
-            participation.user_id = list[i]
-            participation.ballot = list[i]
+            participation.user_id = user_id
+            participation.ballot = user_id
             participation.permission = permission
             db.session.add(participation)
     db.session.commit()
+    return list
 
 def cipher_set(proposal_id, address, cipher):
     user_id = User.query.filter_by(address=address).first().user_id

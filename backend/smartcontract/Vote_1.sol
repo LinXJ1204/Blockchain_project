@@ -32,12 +32,14 @@ contract Vote{
     mapping(uint => _Proposal) private _proposal;
     mapping(uint => bool) private _proposal_id_used;
 
-    function new_proposal(uint proposal_id) public {
+    function new_proposal(uint proposal_id, uint proposal_duration) public returns (bool){
         require(msg.sender==_constractowner, "No Permission");
         require(!_proposal_id_used[proposal_id], "ID been used");
         _proposal[proposal_id]._proposal_id = proposal_id;
         _proposal[proposal_id]._voting_status = 0;
+        _proposal[proposal_id]._duration = proposal_duration;
         _proposal_id_used[proposal_id] = true;
+        return true;
     }
 
     function set_duration(uint duration, uint proposal_id) public {
