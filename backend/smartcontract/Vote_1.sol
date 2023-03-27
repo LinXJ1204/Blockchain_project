@@ -10,7 +10,7 @@ contract Vote{
         _constractowner = msg.sender;
     }
 
-    event Voter_set(address voter, uint user_id, uint proposal_id);
+    event Voter_set(address voter, uint proposal_id);
     event Voting_complete(address voter, string ballot, uint proposal_id);
     event Vote_start(uint start_time, uint block_number, uint proposal_id);
     event Vote_end(uint end_time, uint block_number, uint proposal_id);
@@ -26,7 +26,7 @@ contract Vote{
         address [] _candidate;
         mapping(uint=>address) voter_list;
         mapping(address=>string) voter_ballot;
-        mapping(address => bool) hasVoted;
+        mapping(address=>bool) hasVoted;
     }
 
     mapping(uint => _Proposal) private _proposal;
@@ -48,11 +48,10 @@ contract Vote{
         _proposal[proposal_id]._duration = duration;
     }
 
-    function set_voter_list(address voter, uint proposal_id) private {
-        uint count = _proposal[proposal_id]._count;
-        _proposal[proposal_id].voter_list[count] = voter;
+    function set_voter_list(address voter, uint user_id, uint proposal_id) private {
+        _proposal[proposal_id].voter_list[user_id] = voter;
         _proposal[proposal_id]._count++;
-        emit Voter_set(voter, count, proposal_id);
+        emit Voter_set(voter, proposal_id);
     }
 
     function voting(string memory ballot, uint proposal_id, uint voter_id) public{
@@ -90,13 +89,11 @@ contract Vote{
         _proposal[proposal_id]._candidate = candidates;
     }
 
-
-
-    function set_voters(address [] memory voters, uint proposal_id) public {
+    function set_voters(address [] memory voters, uint [] memory user_id, uint proposal_id) public {
         require(_proposal[proposal_id]._voting_status<1);
         require(msg.sender==_constractowner, "No Permission");
         for(uint i = 0; i < voters.length; i++){
-            set_voter_list(voters[i], proposal_id);
+            set_voter_list(voters[i], user_id[i], proposal_id);
         }
     }
 

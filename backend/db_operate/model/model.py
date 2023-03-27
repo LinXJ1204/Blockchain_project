@@ -9,6 +9,7 @@ class User(db.Model):
     balance = db.Column(db.Integer, nullable=False)
     participation = db.relationship('participation_list', backref='user', lazy='dynamic')
     paper_list = db.relationship('author', backref='user', lazy='dynamic')
+    review_comment = db.relationship('review_comment', backref='user', lazy='dynamic')
 
 class Activity(db.Model):
     __tablename__ = 'activity'
@@ -24,8 +25,8 @@ class participation_list(db.Model):
     activity_id = db.Column(db.Integer, db.ForeignKey(Activity.activity_id))
     user_id = db.Column(db.Integer,db.ForeignKey(User.user_id))
     permission = db.Column(db.String(20), nullable=False)
-    ballot = db.Column(db.Integer, nullable=False, unique=True)
-    result = db.Column(db.String(20), nullable=True)
+    ballot = db.Column(db.Integer, nullable=False, unique=False)
+    result = db.Column(db.String(200), nullable=True)
     key_offering = db.Column(db.Integer, nullable=True)
 
 class paper_list(db.Model):
@@ -34,6 +35,9 @@ class paper_list(db.Model):
     paper_title = db.Column((db.String(60)), nullable=False)
     paper_status = db.Column(db.String(20), nullable=False)
     author = db.relationship('author', backref='paper_list', lazy='dynamic')
+    blockchain_address = db.Column(db.String(60), unique=True)
+    paper_location = db.Column(db.String(60), unique=True)
+    comment = db.relationship('review_comment', backref='paper_list', lazy='dynamic')
 
 class vote_key(db.Model):
     __tablename__ = 'vote_key'
@@ -47,4 +51,13 @@ class author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     paper_id = db.Column(db.Integer, db.ForeignKey(paper_list.paper_id))
     author_id = db.Column(db.Integer, db.ForeignKey(User.user_id))
+
+class review_comment(db.Model):
+    __tablename__ = 'review_comment'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.user_id))
+    paper_id = db.Column(db.Integer, db.ForeignKey(paper_list.paper_id))
+    comment = db.Column(db.String(200), nullable=False)
+    #time
+
 

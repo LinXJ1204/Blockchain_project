@@ -5,7 +5,7 @@
             <p>account:</p>
             <p id="account">0x</p>
             <p>UserID:</p>
-            <p id="user_id"></p>
+            <div id="user_id"></div>
         </div>
     </form>
     <form action="/" method="POST">
@@ -38,6 +38,7 @@
             Proposal id: <input type="text" id="proposal_id_participation" style="background-color: #FFFFB9; width: 400;"><br>
             Participation list: <input type="text" id="participation_list" style="background-color: #FFFFB9; width: 400;"><br>
         </div>
+        <div id="participation_list_result"></div>
         <div>
             <input type="button" value="Participation add" onclick="participation_add()">
             <input type="button" value="Add all" onclick="add_all()">
@@ -56,26 +57,29 @@
             Ballot key: <input type="text" id="ballot_key" style="background-color: #FFFFB9; width: 400;"><br>
         </div>
         <div>
-            <input type="button" value="Cast Ballot" onclick="cast_ballot()">
+            <input type="button" value="Cast Ballot" onclick="casting_ballot()">
         </div>
+        <div id="casting_result"></div>
         <hr>
         <div>
             Proposal_id: <input type="text" id="proposal_id_key" style="background-color: #FFFFB9; width: 400;"><br>
-            Ballot key: <input type="text" id="ballot_key" style="background-color: #FFFFB9; width: 400;"><br>
+            Ballot key: <input type="text" id="ballot_key_submit" style="background-color: #FFFFB9; width: 400;"><br>
         </div>
         <div>
             <input type="button" value="Submit" onclick="sumbit()">
         </div>
+        <div id="ballot_key_result"></div>
     </form>
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script type="module">
         import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.1.0/ethers.min.js";
-        let abi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"end_time","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"block_number","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Vote_end","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"start_time","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"block_number","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Vote_start","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"voter","type":"address"},{"indexed":false,"internalType":"uint256","name":"user_id","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Voter_set","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"voter","type":"address"},{"indexed":false,"internalType":"bytes32","name":"ballot","type":"bytes32"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Voting_complete","type":"event"},{"inputs":[{"internalType":"address","name":"voter","type":"address"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"get_ballot","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"new_proposal","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"candidates","type":"address[]"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"set_candidates","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"set_duration","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"voters","type":"address[]"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"set_voters","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"ballot","type":"bytes32"},{"internalType":"uint256","name":"proposal_id","type":"uint256"},{"internalType":"uint256","name":"voter_id","type":"uint256"}],"name":"voting","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"voting_end","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"voting_start","outputs":[],"stateMutability":"nonpayable","type":"function"}];
-        let smartcontract_address = '0xD7660E83af0B1De6CF44dF494B3355019Ff86f71';
+        let abi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"end_time","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"block_number","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Vote_end","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"start_time","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"block_number","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Vote_start","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"voter","type":"address"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Voter_set","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"voter","type":"address"},{"indexed":false,"internalType":"string","name":"ballot","type":"string"},{"indexed":false,"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"Voting_complete","type":"event"},{"inputs":[{"internalType":"address","name":"voter","type":"address"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"get_ballot","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposal_id","type":"uint256"},{"internalType":"uint256","name":"proposal_duration","type":"uint256"}],"name":"new_proposal","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"candidates","type":"address[]"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"set_candidates","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"set_duration","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address[]","name":"voters","type":"address[]"},{"internalType":"uint256[]","name":"user_id","type":"uint256[]"},{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"set_voters","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"ballot","type":"string"},{"internalType":"uint256","name":"proposal_id","type":"uint256"},{"internalType":"uint256","name":"voter_id","type":"uint256"}],"name":"voting","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"voting_end","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"proposal_id","type":"uint256"}],"name":"voting_start","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+        let smartcontract_address = '0x10390e9988D1fc4e19Fe1cC0b6927e62702F9b4c';
         let signer = null;
         let provider;
-        let account;
+        var participation_list = []
+        var participation_list_id;
 
         async function initial(){
                 var el = document.getElementById("account");
@@ -122,7 +126,7 @@
                 proposal_result.innerHTML = 'Proposal id: ' + data.data;
                 console.log(data.data);
                 const contract = new ethers.Contract(smartcontract_address, abi, signer);
-                contract.new_proposal(data.data);
+                contract.new_proposal(data.data, duration);
             }
             });
         }
@@ -147,10 +151,11 @@
             url: "/vote/set_participate",
             type: "POST",
             dataType: "json",
-            data: ({participation:[particitpation_list], id:proposal_id, permission:'voter'}),
+            data: ({participation:particitpation_list, id:proposal_id, permission:'voter'}),
             success: function (data) {
+                console.log(data.particitpation_list, data.participation_id);
                 const contract = new ethers.Contract(smartcontract_address, abi, signer);
-                contract.set_voters([particitpation_list], proposal_id);
+                contract.set_voters(data.particitpation_list, data.participation_id, proposal_id);
             }
             });
         }
@@ -163,9 +168,9 @@
             dataType: "json",
             data: ({participation:[], id:proposal_id, permission:'voter'}),
             success: function (data) {
-                list = data.data
+                console.log(data.particitpation_list, data.participation_id);
                 const contract = new ethers.Contract(smartcontract_address, abi, signer);
-                contract.set_voters(list, proposal_id);
+                contract.set_voters(data.particitpation_list, data.participation_id, proposal_id);
             }
             });
         }
@@ -185,20 +190,58 @@
             });
         }
 
-        window.cast_ballot = async function cast_ballot(){
-            //add crypto.js
+        window.casting_ballot = function cast_ballot(){
             var proposal_id = document.getElementById('proposal_id_cast').value;
             var cast_ballot = document.getElementById('cast_ballot').value;
             var ballot_key = document.getElementById('ballot_key').value;
-            var user_id = document.getElementById("user_id").value;
-            var encrypted_ballot = CryptoJS.AES.encrypt(cast_ballot, ballot_key);
+            var user_id = document.getElementById('user_id').innerHTML;
+            var ballot = [];
+            console.log(user_id)
+            const promise_account = new Promise((resolve)=>{
+                resolve((CryptoJS.AES.encrypt(cast_ballot, ballot_key).toString()));
+            }).then((t_ballot)=>{
+                ballot.push(t_ballot)
+                var contract = new ethers.Contract(smartcontract_address, abi, signer);
+                return contract;
+            }).then((contract)=>{
+                console.log(ballot[0], proposal_id, user_id)
+                contract.voting(ballot[0], proposal_id, user_id);
+            });
 
-            const contract = new ethers.Contract(smartcontract_address, abi, signer);
-            contract.voting(encrypted_ballot, proposal_id, user_id);
         }
 
         window.sumbit = async function sumbit(){
-            
+            var proposal_id = document.getElementById('proposal_id_key').value;
+            var account = document.getElementById('account').innerHTML;
+            var ballot_key = document.getElementById('ballot_key_submit').value;
+            var ballot_key_result = document.getElementById('ballot_key_result');
+            console.log(ballot_key);
+            const promise_account = new Promise((resolve)=>{
+                resolve($.ajax({
+                url: "/vote/get_user_cipher",
+                type: "POST",
+                dataType: "json",
+                data: ({address: account, proposal_id: proposal_id}),
+                success: function (data) {
+                    return data.data;
+                }}))
+            }).then((cipher)=>{
+                return new Promise((resolve)=>{
+                    console.log(cipher)
+                    resolve(CryptoJS.AES.decrypt(cipher.data, ballot_key).toString(CryptoJS.enc.Utf8))
+                    console.log(CryptoJS.AES.decrypt(cipher.data, ballot_key).toString(CryptoJS.enc.Utf8))
+                }).then((result)=>{
+                    $.ajax({
+                    url: "/vote/set_key",
+                    type: "POST",
+                    dataType: "json",
+                    data: ({key: ballot_key, address: account, id: proposal_id}),
+                    success: function (data) {
+                        console.log(result);
+                        ballot_key_result.innerHTML = result;
+                }})
+            })
+            })
         }
 
 
@@ -210,7 +253,7 @@
             var address = document.getElementById("user_address").value;
             var password = document.getElementById("user_keyword").value;
             $.ajax({
-            url: "/user",
+            url: "/user/add",
             type: "POST",
             dataType: "json",
             data: ({name:name,address:address,password:password}),
@@ -221,9 +264,9 @@
             });
         }
         var key = 'wayne';
-        var encrypted = CryptoJS.AES.encrypt("Message", key);
-        var decrypted = CryptoJS.AES.decrypt(encrypted, key);
-        
+        var encrypted = CryptoJS.AES.encrypt("Message", key).toString();
+        var decrypted = CryptoJS.AES.decrypt(encrypted, key).toString(CryptoJS.enc.Utf8);
+
         
     </script>
     
