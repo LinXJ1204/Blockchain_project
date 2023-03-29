@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Link, Routes, Route, useParams } from "react-router-dom";
 import Paperlist from './paperlist'
 import Notification from '../notification';
 import { store } from '../store';
@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { paperlist } from './paperSlice';
 import {Apply} from './apply';
 import { paper_initial } from './paperlist';
-
+import { Outlet } from "react-router-dom";
 
 
 function Mypaper(){
@@ -27,15 +27,14 @@ function Mypaper(){
                   </li>
                 </ul>
                 </div>
-                <a href="#" className="btn-download">
+                <div className="btn-download">
                 <i className='bx bxs-cloud-download' ></i>
                 <span className="text"><Link to='/paper/apply'>Apply Paper</Link></span>
-                </a>
+                </div>
                 </div>
             
             <div className="mypaper">
-                {<Paperlist paper={paper}/>}
-                < Notification />
+                <Outlet />
             </div>
         </div>
     )

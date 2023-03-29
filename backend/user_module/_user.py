@@ -22,8 +22,8 @@ def get_info():
 def get_mypaper():
     requests = request.json
     print(request.json)
-    paper_title, paper_status = mypaper(requests['user_id'])
+    paper_title, paper_status, paper_id = mypaper(requests['user_id'])
     paper_list = []
     for i in range(len(paper_title)):
-        paper_list.append({'title':paper_title[i],'status':paper_status[i]})
+        paper_list.append({'title':paper_title[i],'status':paper_status[i],'paper_id':paper_id[i]})
     return {'data': paper_list}

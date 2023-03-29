@@ -29,3 +29,11 @@ def review_pass():
     print(request.json)
     requests = request.json
     return True
+
+@review_blueprint.route('/get_paper_info', methods=['GET', 'POST'])
+def get_paper_info():
+    print(request.json)
+    requests = request.json
+    paper = get_paper_info_db(requests['paper_id'])
+    print(paper)
+    return {'title':paper.paper_title,'status':paper.paper_status, 'paper_id':paper.paper_id}

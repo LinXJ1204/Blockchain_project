@@ -23,7 +23,7 @@ db.init_app(app)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    return render_template('demo_web3js.html')
 
 
 

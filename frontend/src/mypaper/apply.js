@@ -33,11 +33,6 @@ export function Apply(){
 
     return(
         <div className="apply ">
-            <div className="head">
-                <h3>Apply</h3>
-                <i className='bx bx-search' ></i>
-                <i className='bx bx-filter' ></i>
-            </div>
             <div>
                     <table>
                         <thead>

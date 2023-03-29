@@ -5,14 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86fa5823-93bc-47c5-b119-4666f6873f33" name="Changes" comment="Frontend, backend, database and blockchain connection been completed.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/db_operate/_db_operate.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/db_operate/_db_operate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/db_operate/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/db_operate/model/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/extension.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/extension.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/smartcontract/SmartContract.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/smartcontract/SmartContract.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/smartcontract/Vote_1.sol" beforeDir="false" afterPath="$PROJECT_DIR$/backend/smartcontract/Vote_1.sol" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/templates/demo_web3js.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/templates/demo_web3js.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/vote/_vote.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vote_module/_vote.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/review_module/_review.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/review_module/_review.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/user_module/_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/user_module/_user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/mypaper/apply.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/mypaper/apply.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/mypaper/mypaper.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/mypaper/mypaper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/mypaper/paperapply.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/mypaper/paperlist.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/mypaper/paperlist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -112,9 +112,15 @@ def mypaper(author_id):
         paper_id.append(item.paper_id)
     mypaper_title = []
     mypaper_status = []
+    mypaper_id = []
     for id in paper_id:
         paper  = paper_list.query.filter_by(paper_id=id).first()
         mypaper_title.append(paper.paper_title)
         mypaper_status.append(paper.paper_status)
-    return mypaper_title, mypaper_status
+        mypaper_id.append(id)
+    return mypaper_title, mypaper_status, mypaper_id
+
+def get_paper_info_db(paper_id):
+    paper = paper_list.query.filter_by(paper_id=paper_id).first()
+    return paper
 
