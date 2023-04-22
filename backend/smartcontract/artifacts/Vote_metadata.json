@@ -15,6 +15,63 @@
 				"inputs": [
 					{
 						"indexed": false,
+						"internalType": "address",
+						"name": "voter",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "vote_id",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "esecret",
+						"type": "string"
+					}
+				],
+				"name": "Esecret_submit",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "vote_id",
+						"type": "uint256"
+					}
+				],
+				"name": "Esecret_submit_end",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "vote_title",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "vote_id",
+						"type": "uint256"
+					}
+				],
+				"name": "New_vote",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
 						"internalType": "uint256",
 						"name": "end_time",
 						"type": "uint256"
@@ -28,7 +85,7 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "proposal_id",
+						"name": "vote_id",
 						"type": "uint256"
 					}
 				],
@@ -53,7 +110,7 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "proposal_id",
+						"name": "vote_id",
 						"type": "uint256"
 					}
 				],
@@ -72,7 +129,7 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "proposal_id",
+						"name": "vote_id",
 						"type": "uint256"
 					}
 				],
@@ -97,12 +154,25 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "proposal_id",
+						"name": "vote_id",
 						"type": "uint256"
 					}
 				],
 				"name": "Voting_complete",
 				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "vote_id",
+						"type": "uint256"
+					}
+				],
+				"name": "esecret_submit_end",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -113,7 +183,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "proposal_id",
+						"name": "vote_id",
 						"type": "uint256"
 					}
 				],
@@ -132,16 +202,45 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "proposal_id",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "proposal_duration",
+						"name": "vote_id",
 						"type": "uint256"
 					}
 				],
-				"name": "new_proposal",
+				"name": "get_publickey",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "vote_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "candidates",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "vote_duration",
+						"type": "uint256"
+					}
+				],
+				"name": "new_vote",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -155,17 +254,17 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address[]",
-						"name": "candidates",
-						"type": "address[]"
+						"internalType": "uint256",
+						"name": "vote_id",
+						"type": "uint256"
 					},
 					{
-						"internalType": "uint256",
-						"name": "proposal_id",
-						"type": "uint256"
+						"internalType": "string",
+						"name": "publickey",
+						"type": "string"
 					}
 				],
-				"name": "set_candidates",
+				"name": "set_publickey",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -174,16 +273,21 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "duration",
+						"name": "vote_id",
 						"type": "uint256"
 					},
 					{
-						"internalType": "uint256",
-						"name": "proposal_id",
-						"type": "uint256"
+						"internalType": "string[]",
+						"name": "ver_result",
+						"type": "string[]"
+					},
+					{
+						"internalType": "address",
+						"name": "candidate",
+						"type": "address"
 					}
 				],
-				"name": "set_duration",
+				"name": "set_result",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -202,11 +306,29 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "proposal_id",
+						"name": "vote_id",
 						"type": "uint256"
 					}
 				],
 				"name": "set_voters",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "vote_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "esecret",
+						"type": "string"
+					}
+				],
+				"name": "upload_esecret",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -220,7 +342,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "proposal_id",
+						"name": "vote_id",
 						"type": "uint256"
 					},
 					{
@@ -238,7 +360,7 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "proposal_id",
+						"name": "vote_id",
 						"type": "uint256"
 					}
 				],
@@ -251,7 +373,7 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "proposal_id",
+						"name": "vote_id",
 						"type": "uint256"
 					}
 				],
@@ -274,7 +396,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"backend/smartcontract/Vote_1.sol": "Vote"
+			"Vote_1.sol": "Vote"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -288,12 +410,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"backend/smartcontract/Vote_1.sol": {
-			"keccak256": "0x0ea1fdb83e9d119f9172dc2268b9cf140c1d99807a40055edb798441b5b6f581",
+		"Vote_1.sol": {
+			"keccak256": "0xdfa35adf5c6120a227f4d7d10cde2a9d9a6cb92f97958dd9ce917f97eb104243",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8e8a0a78903027307493d4acecd08922d519322d6fa7c1015d08fe39534e1b0f",
-				"dweb:/ipfs/Qmb1R2qvPHVnKhZjF526afRNjDRgeED5kh28Mjc3CyNrUh"
+				"bzz-raw://8124be18cdfdd2277ff70bb6d5d2d5123c3767f6c8a82fa2089e2143a88c3db9",
+				"dweb:/ipfs/QmYr1iwU6Bq3Qycyh6nEV9YLhbwxV9wGw68BXvsmKYb14G"
 			]
 		}
 	},

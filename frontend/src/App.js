@@ -5,26 +5,24 @@ import './App.css';
 import './style.css';
 import Mypaper from './mypaper/mypaper'
 import User from "./user/user";
-import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.1.0/ethers.min.js";
-import axios from 'axios';
 import {initial} from './initial/initial'
 import Paperlist, {paperlist_loader} from "./mypaper/paperlist";
-import { Paperinfo } from "./mypaper/paperinfo";
-import { paperinfo_loader } from "./mypaper/paperinfo";
-import { NavLink } from "react-router-dom";
+import { Paperinfo, paperinfo_loader } from "./mypaper/paperinfo";
 import { Home } from "./home";
 import Apply from "./mypaper/apply";
 import { useSelector } from "react-redux";
 import { Election } from "./election/election";
 import { Review } from "./review/review";
+import Reviewpaperlist, { review_paperlist_loader } from "./review/reviewpaperlist";
+import Electionlist, {electionlist_loader} from "./election/electoinlist";
+import { Newelection } from "./election/newelection";
+import { Electioninfo, electioninfo_loader } from "./election/election_info";
 
-const { ethereum } = window;
+
 
 function App() {
   var userid = useSelector(()=>{return store.getState()['user_info'].userid})
-  async function loader({params}){
-    return params.paperid;
-    }
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Home/>}>
@@ -35,12 +33,44 @@ function App() {
         </Route>
         <Route path="/user" element={<User/>} />
         <Route index element={<User/>} />
-        <Route path="/election" element={<Election />}></Route>
-        <Route path="review" element={<Review />}></Route>
+        <Route path="/election" element={<Election />}>
+          <Route path="" loader={(params)=>{return electionlist_loader(userid)}} index element={<Electionlist />}></Route>
+          <Route path="newelection" element={<Newelection />} />
+          <Route path=":electionid" loader={electioninfo_loader} element={<Electioninfo />}></Route>
+        </Route>
+        <Route path="review" element={<Review />}>
+          <Route path="" index loader={()=>{return review_paperlist_loader()}} element={<Reviewpaperlist />}></Route>
+        </Route>
       </Route>
     )
   )  
   initial();
+
+/*   const CryptoJS = require("crypto-js");
+  
+
+  const plaintext = "E+Fi9KvSgPaUv1ozJPpmMA==";
+
+  var key = "1234"
+
+  key = CryptoJS.SHA256(key);
+
+  console.log(key);
+
+  const iv = CryptoJS.enc.Utf8.parse("This is an IVVV."); // IV (Initialization Vector)
+
+  // Encrypt plaintext
+  const ciphertext = CryptoJS.AES.encrypt(plaintext, key, { iv: iv }).toString();
+
+  const rplaintext = CryptoJS.AES.decrypt(plaintext, key, { iv: iv }).toString(CryptoJS.enc.Utf8);
+
+  console.log("Plaintext:", plaintext);
+  console.log("Ciphertext:", ciphertext);
+  console.log(rplaintext); */
+
+
+  
+  
   return (
       <div className="App">
         <RouterProvider router={router}/>

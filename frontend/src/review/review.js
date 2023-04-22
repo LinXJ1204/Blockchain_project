@@ -1,6 +1,9 @@
 import { BrowserRouter, Link, Routes, Route, useParams, Outlet } from "react-router-dom";
+import Reviewpaperlist from "./reviewpaperlist";
+import { review_paperlist_loader } from "./reviewpaperlist";
 
 export function Review(){
+
     return(
         <div>
             <div className="head-title">
@@ -8,14 +11,17 @@ export function Review(){
                     <h1>Review</h1>
                     <ul className="breadcrumb">
                     <li>
-                        <a><Link to='/'>Dashboard</Link></a>
+                        <p><Link to='/'>Dashboard</Link></p>
                     </li>
                     <li><i className='bx bx-chevron-right' ></i></li>
                     <li>
-                        <a className="active" href="#">Review</a>
+                        <p className="active" >Review</p>
                     </li>
                     </ul>
                 </div>
+            </div>
+            <div className="mypaper">
+                <Outlet />
             </div>
         </div>
     )

@@ -19,19 +19,19 @@ function Mypaper(){
                 <h1>Paper</h1>
                 <ul className="breadcrumb">
                   <li>
-                    <a href="#">Dashboard</a>
+                    <p ><Link to='/'>Dashboard</Link></p>
                   </li>
                   <li><i className='bx bx-chevron-right' ></i></li>
                   <li>
-                    <a className="active" href="#">Paper</a>
+                    <p className="active" ><Link to='/paper'>Paper</Link></p>
                   </li>
                 </ul>
-                </div>
-                <div className="btn-download">
+              </div>
+              <div className="btn-download">
                 <i className='bx bxs-cloud-download' ></i>
                 <span className="text"><Link to='/paper/apply'>Apply Paper</Link></span>
-                </div>
-                </div>
+              </div>
+            </div>
             
             <div className="mypaper">
                 <Outlet />

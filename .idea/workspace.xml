@@ -7,16 +7,26 @@
     <list default="true" id="86fa5823-93bc-47c5-b119-4666f6873f33" name="Changes" comment="Frontend, backend, database and blockchain connection been completed.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/db_operate/_db_operate.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/db_operate/_db_operate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/db_operate/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/db_operate/model/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/review_module/_review.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/review_module/_review.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/smartcontract/SmartContract.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/smartcontract/SmartContract.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/smartcontract/Vote1.abi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/smartcontract/Vote1.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/smartcontract/Vote_1.sol" beforeDir="false" afterPath="$PROJECT_DIR$/backend/smartcontract/Vote_1.sol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/smartcontract/artifacts/Vote.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/smartcontract/artifacts/Vote.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/smartcontract/artifacts/Vote_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/smartcontract/artifacts/Vote_metadata.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/smartcontract/artifacts/build-info/e72745aef5289d4f434d6c7a16186599.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/user_module/_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/user_module/_user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/vote_module/_vote.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/vote_module/_vote.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/blockchain.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/blockchain.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/election/election.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/election/election.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/mypaper/apply.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/mypaper/apply.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/mypaper/mypaper.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/mypaper/mypaper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/mypaper/paperapply.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/mypaper/paperlist.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/mypaper/paperlist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/review/review.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/review/review.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,8 +37,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -39,7 +49,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2MbDh0q51bc3j88yc6EWEt28say" />
   <component name="ProjectLevelVcsManager">
@@ -88,8 +98,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Blockchain_project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test" />
         <item itemvalue="Python._db_operate" />
       </list>
     </recent_temporary>

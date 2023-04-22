@@ -421,38 +421,38 @@ body {
 	padding: 24px;
 	overflow-x: auto;
 }
-#content main .mypaper .head {
+#content main  .head {
 	display: flex;
 	align-items: center;
 	grid-gap: 16px;
 	margin-bottom: 24px;
 }
-#content main .mypaper .head h3 {
+#content main  .head h3 {
 	margin-right: auto;
 	font-size: 24px;
 	font-weight: 600;
 }
-#content main .mypaper .head .bx {
+#content main  .head .bx {
 	cursor: pointer;
 }
 
-#content main .mypaper .default_list {
+#content main  .default_list {
 	flex-grow: 1;
 	flex-basis: 500px;
 }
-#content main .mypaper .default_list table {
+#content main  .default_list table {
 	width: 100%;
 	border-collapse: collapse;
 }
-#content main .mypaper .default_list table th {
+#content main  .default_list table th {
 	padding-bottom: 12px;
 	font-size: 13px;
 	border-bottom: 1px solid var(--grey);
 }
-#content main .mypaper .default_list table td {
+#content main  .default_list table td {
 	padding: 16px 0;
 }
-#content main .mypaper .default_list table tr td:first-child {
+#content main  .default_list table tr td:first-child {
 	display: flex;
 	align-items: center;
 	grid-gap: 12px;
@@ -464,24 +464,15 @@ body {
 	border-radius: 50%;
 	object-fit: cover;
 }
-#content main .mypaper .default_list table tbody tr:hover {
+#content main  .default_list table tbody tr:hover {
 	background: var(--grey);
 }
-#content main .mypaper .default_list table tr td .status {
+#content main  .default_list table tr td .status {
 	font-size: 10px;
 	padding: 6px 16px;
 	color: var(--light);
 	border-radius: 20px;
 	font-weight: 700;
-}
-#content main .mypaper .default_list table tr td .status.completed {
-	background: var(--blue);
-}
-#content main .mypaper .default_list table tr td .status.process {
-	background: var(--yellow);
-}
-#content main .mypaper .default_list table tr td .status.pending {
-	background: var(--orange);
 }
 
 
@@ -502,18 +493,7 @@ body {
 	justify-content: space-between;
 	align-items: center;
 }
-#content main .mypaper .notification .notification-list li .bx {
-	cursor: pointer;
-}
-#content main .mypaper .notification .notification-list li.completed {
-	border-left: 10px solid var(--blue);
-}
-#content main .mypaper .notification .notification-list li.not-completed {
-	border-left: 10px solid var(--orange);
-}
-#content main .mypaper .notification .notification-list li:last-child {
-	margin-bottom: 0;
-}
+
 /* MAIN */
 /* CONTENT */
 
@@ -642,13 +622,4 @@ input {
 	color: var(--light);
 	border-radius: 20px;
 	font-weight: 700;
-}
-#content main .mypaper .apply table tr td .status.completed {
-	background: var(--blue);
-}
-#content main .mypaper .apply table tr td .status.process {
-	background: var(--yellow);
-}
-#content main .mypaper .apply table tr td .status.pending {
-	background: var(--orange);
 }

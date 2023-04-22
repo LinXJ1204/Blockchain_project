@@ -11,11 +11,17 @@ class User(db.Model):
     paper_list = db.relationship('author', backref='user', lazy='dynamic')
     review_comment = db.relationship('review_comment', backref='user', lazy='dynamic')
 
+class Status_list(db.Model):
+    __tablename__ = 'status_list'
+    id = db.Column(db.Integer, primary_key=True)
+
 class Activity(db.Model):
     __tablename__ = 'activity'
     activity_id = db.Column(db.Integer, primary_key=True)
     activity_name = db.Column(db.String(70), nullable=False)
     category = db.Column(db.String(20), nullable=False)
+    blockchain_address = db.Column(db.String(60), unique=True)
+    activity_status = db.Column(db.String(20), nullable=False)
     participation = db.relationship('participation_list', backref='activity', lazy='dynamic')
     vote_key = db.relationship('vote_key', backref='activity', lazy='dynamic')
 
@@ -38,6 +44,13 @@ class paper_list(db.Model):
     blockchain_address = db.Column(db.String(60), unique=True)
     paper_location = db.Column(db.String(60), unique=True)
     comment = db.relationship('review_comment', backref='paper_list', lazy='dynamic')
+    field = db.relationship('paper_field', backref='paper_list', lazy='dynamic')
+
+class paper_field(db.Model):
+    __tablename__ = 'paper_field'
+    id = db.Column(db.Integer, primary_key=True)
+    paper_id =db.Column(db.Integer, db.ForeignKey(paper_list.paper_id))
+    field = db.Column(db.String(50), nullable=False, unique=True)
 
 class vote_key(db.Model):
     __tablename__ = 'vote_key'
